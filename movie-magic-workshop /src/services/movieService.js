@@ -6,11 +6,11 @@ async function getAll(query = {}) {
     let movies = await movieData.getMovies();
 
     if (query.title) {
-        movies = movies.filter(movie => movie.title.includes(query.title));
+        movies = movies.filter(movie => movie.title.toLowerCase().includes(query.title.toLowerCase()));
     }
 
     if (query.genre) {
-        movies = movies.filter(movie => movie.genre === query.genre);
+        movies = movies.filter(movie => movie.genre.toLowerCase().includes(query.genre.toLowerCase()));
     }
 
     if (query.year) {
