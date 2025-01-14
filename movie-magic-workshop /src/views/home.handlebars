@@ -15,13 +15,13 @@
         {{#each movies}}
         <div class="flip flip-vertical">
             <div class="front">
-                <img src="{{image}}" alt="Jungle-Cruise">
+                <img src="{{imageUrl}}" alt="Jungle-Cruise">
             </div>
             <div class="back">
                 <h1>{{title}}</h1>
                 <h2>Genre: {{genre}}</h2>
                 <p>Description: {{description}}</p>
-                <a href="movies/{{id}}" class="details">Details</a>
+                <a href="movies/{{_id}}" class="details">Details</a>
             </div>
         </div>
         {{else}}

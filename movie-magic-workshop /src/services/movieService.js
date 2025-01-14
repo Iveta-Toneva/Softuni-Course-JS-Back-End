@@ -1,37 +1,27 @@
-import movieData from "../data/movieData.js";
-import uniqid from 'uniqid';
+import Movie from "../models/Movie.js";
 
-async function getAll(query = {}) {
+function getAll(query = {}) {
 
-    let movies = await movieData.getMovies();
+    const moviesQuery = Movie.find();
 
     if (query.title) {
-        movies = movies.filter(movie => movie.title.toLowerCase().includes(query.title.toLowerCase()));
+        moviesQuery.find({ title: { $regex: query.title, $options: 'i' } });
     }
 
     if (query.genre) {
-        movies = movies.filter(movie => movie.genre.toLowerCase().includes(query.genre.toLowerCase()));
+        moviesQuery.find({ genre: { $regex: query.genre, $options: 'i' } });
     }
 
     if (query.year) {
-        movies = movies.filter(movie => movie.year === query.year);
+        moviesQuery.find({ year: query.year });
     }
 
-    return movies;
+    return moviesQuery;
 
 }
 
-async function save(movie) {
-    movie.id = uniqid();
-    movie.rating = Number(movie.rating);
-    movieData.saveMovie(JSON.stringify(movie));
-}
+const save = (movie) => Movie.create(movie);
 
-async function getOne(id) {
-    const movies = await getAll();
-    const movie = movies.find(movie => movie.id === id);
-    return movie;
-}
-
+const getOne = (id) => Movie.findById(id);
 
 export default { getAll, save, getOne };

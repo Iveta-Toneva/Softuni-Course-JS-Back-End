@@ -1,4 +1,4 @@
-import { query, Router } from "express";
+import { Router } from "express";
 import movieService from "../services/movieService.js";
 
 const router = Router();
@@ -17,14 +17,14 @@ router.post('/create', async (req, res) => {
 router.get('/search', async (req, res) => {
 
     const filterMovies = req.query;
-    const movies = await movieService.getAll(filterMovies);
+    const movies = await movieService.getAll(filterMovies).lean();
     res.render('home', { isSearch: true, movies: movies, filterMovies });
 
 })
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
-    const movie = await movieService.getOne(id);
+    const movie = await movieService.getOne(id).lean();
     const rating = '&#x2605'.repeat(movie.rating);
     res.render('details', { movie: movie, rating });
 })
