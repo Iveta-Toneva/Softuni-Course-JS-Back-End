@@ -24,10 +24,8 @@ const save = (movie) => Movie.create(movie);
 
 const getOne = (id) => Movie.findById(id);
 
-// const attachCast = async (movieId, castId) => {
-//     const movie = Movie.findById(movieId);
-//     movie.casts.push(castId);
-//     await movie.save();
-// }
+const attachCast =  (movieId, castId) => {
+    return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
+}
 
 export default { getAll, save, getOne, attachCast };
