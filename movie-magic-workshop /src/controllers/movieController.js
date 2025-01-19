@@ -11,7 +11,7 @@ router.get('/create', (req, res) => {
 
 router.post('/create', async (req, res) => {
     const movie = req.body;
-    movieService.save(movie);
+    await movieService.save(movie);
     res.redirect('/');
 });
 
@@ -32,8 +32,8 @@ router.get('/:id', async (req, res) => {
 
 router.get('/:id/attach', async (req, res) => {
     const movie = await movieService.getOne(req.params.id).lean();
-    const casts = await castService.getAll().lean();
-    res.render('attach', { movie, casts });
+    const cast = await castService.getAllExcept(movie.casts).lean();
+    res.render('attach', { movie, cast });
 });
 
 

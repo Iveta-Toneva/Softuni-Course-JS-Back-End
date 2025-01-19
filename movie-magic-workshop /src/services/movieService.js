@@ -22,9 +22,9 @@ function getAll(query = {}) {
 
 const save = (movie) => Movie.create(movie);
 
-const getOne = (id) => Movie.findById(id);
+const getOne = (id) => Movie.findById(id).populate('casts');
 
-const attachCast =  (movieId, castId) => {
+const attachCast = (movieId, castId) => {
     return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
 }
 
