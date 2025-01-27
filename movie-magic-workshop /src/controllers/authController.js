@@ -1,6 +1,8 @@
 import { Router } from "express";
 import authService from "../services/authService.js";
 
+
+
 const router = Router();
 
 router.get('/register', (req, res) => {

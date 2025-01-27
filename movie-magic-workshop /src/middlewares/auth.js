@@ -20,6 +20,7 @@ export const authMiddleware = (req, res, next) => {
 
         res.locals.isAuthenticated = true;
         res.locals.email = decodedToken.email;
+        req.isAuth = true;
 
         return next();
 
@@ -31,4 +32,13 @@ export const authMiddleware = (req, res, next) => {
 
 };
 
+
+
+export const isAuth = (req, res, next) => {
+   
+    if (!req.isAuth) {
+        return res.redirect('/auth/login');
+    }
+    return next();
+}
 
