@@ -20,7 +20,7 @@ function getAll(query = {}) {
 
 }
 
-const save = (movie) => Movie.create(movie);
+const save = (movie, ownerId) => Movie.create({ ...movie, owner: ownerId });
 
 const getOne = (id) => Movie.findById(id).populate('casts');
 

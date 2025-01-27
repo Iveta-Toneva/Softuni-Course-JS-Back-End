@@ -11,7 +11,8 @@ router.get('/create', (req, res) => {
 
 router.post('/create', async (req, res) => {
     const movie = req.body;
-    await movieService.save(movie);
+    const ownerId = res.user._id;
+    await movieService.save(movie, ownerId);
     res.redirect('/');
 });
 
@@ -26,8 +27,9 @@ router.get('/search', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const movie = await movieService.getOne(id).lean();
+    const isOwner = res.user?._id == movie.owner;
     const rating = '&#x2605'.repeat(movie.rating);
-    res.render('details', { movie: movie, rating });
+    res.render('details', { movie: movie, rating, isOwner });
 });
 
 router.get('/:id/attach', async (req, res) => {
