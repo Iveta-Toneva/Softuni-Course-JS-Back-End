@@ -13,7 +13,7 @@ export const authMiddleware = (req, res, next) => {
 
         const decodedToken = jwt.verify(token, SECRET);
 
-        res.user = {
+        req.user = {
             _id: decodedToken._id,
             email: decodedToken.email
         };
