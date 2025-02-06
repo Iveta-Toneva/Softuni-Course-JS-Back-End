@@ -2,18 +2,24 @@ import { Router } from "express";
 import movieService from "../services/movieService.js";
 import castService from "../services/castService.js";
 import { isAuth } from "../middlewares/auth.js";
+import { getErrorMessage } from "../utils/error.js";
 
 const router = Router();
 
 
-router.get('/create',isAuth,(req, res) => {
+router.get('/create', isAuth, (req, res) => {
     res.render('create');
 });
 
-router.post('/create',isAuth,  async (req, res) => {
+router.post('/create', isAuth, async (req, res) => {
     const movie = req.body;
     const ownerId = req.user._id;
-    await movieService.save(movie, ownerId);
+    try {
+        await movieService.save(movie, ownerId);
+    } catch (error) {
+        const errorMessage = getErrorMessage(error);
+        return res.render('create', { movie, errorMessage });
+    }
     res.redirect('/');
 });
 
@@ -40,30 +46,35 @@ router.get('/:id/attach', isAuth, async (req, res) => {
 });
 
 
-router.post('/:id/attach',isAuth,async (req, res) => {
+router.post('/:id/attach', isAuth, async (req, res) => {
     const movieId = req.params.id;
     const castId = req.body.cast;
     await movieService.attachCast(movieId, castId);
     res.redirect(`/movies/${movieId}`);
 });
 
-router.get('/:id/delete',isAuth,async (req, res) => {
+router.get('/:id/delete', isAuth, async (req, res) => {
     const movieId = req.params.id;
     await movieService.remove(movieId);
     res.redirect('/');
 });
 
-router.get('/:id/edit',isAuth,  async (req, res) => {
+router.get('/:id/edit', isAuth, async (req, res) => {
     const movieId = req.params.id;
     const movie = await movieService.getOne(movieId).lean();
     res.render('edit', { movie });
 });
 
 
-router.post('/:id/edit',isAuth, async (req, res) => {
+router.post('/:id/edit', isAuth, async (req, res) => {
     const movieId = req.params.id;
-    const body = req.body;
-    await movieService.edit(movieId, body);
+    const movie = req.body;
+    try {
+        await movieService.edit(movieId, movie);
+    } catch (error) {
+        return res.render('edit', { movie, errorMessage: getErrorMessage(error) });
+    }
+
     res.redirect(`/movies/${movieId}`);
 });
 

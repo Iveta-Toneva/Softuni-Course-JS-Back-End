@@ -10,6 +10,11 @@
 <body>
 
     <div id="box">
+        {{#if errorMessage}}
+        <div class="error-container">
+            <p>{{errorMessage}}</p>
+        </div>
+        {{/if}}
         <nav>
             <img src="/img/logo.webp" alt="logo">
             <ul class="menu">

@@ -30,6 +30,6 @@ const attachCast = (movieId, castId) => {
 
 const remove = (movieId) => Movie.findByIdAndDelete(movieId);
 
-const edit = (movieId, body) => Movie.findByIdAndUpdate(movieId, body);
+const edit = (movieId, body) => Movie.findByIdAndUpdate(movieId, body, { runValidators: true });
 
 export default { getAll, save, getOne, attachCast, remove, edit };

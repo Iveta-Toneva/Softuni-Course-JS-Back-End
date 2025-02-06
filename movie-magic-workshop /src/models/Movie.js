@@ -5,19 +5,19 @@ const movieSchema = new Schema({
         type: String,
         required: [true, 'Title is required!'],
         minLength: [5, 'Title should be at least 5 characters!'],
-        match: [/^[A-Za-z0-9 ]$/, 'Title can contain only english letters digits and whitespaces!']
+        match: [/^[A-Za-z0-9 ]+$/, 'Title can contain only english letters digits and whitespaces!']
     },
     genre: {
         type: String,
         required: [true, 'Genre is required!'],
         minLength: [5, 'Genre should be at least 5 characters!'],
-        match: [/^[A-Za-z0-9 ]$/, 'Genre can contain only english letters digits and whitespaces!']
+        match: [/^[A-Za-z0-9 ]+$/, 'Genre can contain only english letters digits and whitespaces!']
     },
     director: {
         type: String,
         required: [true, 'Director is required!'],
         minLength: [5, 'Director should be at least 5 characters!'],
-        match: [/^[A-Za-z0-9 ]$/, 'Director can contain only english letters digits and whitespaces!']
+        match: [/^[A-Za-z0-9 ]+$/, 'Director can contain only english letters digits and whitespaces!']
     },
     year: {
         type: Number,
@@ -28,7 +28,7 @@ const movieSchema = new Schema({
     imageUrl: {
         type: String,
         required: [true, 'Image is required!'],
-        match: [/^http:\/\/s?/, 'The image URL should be valid!']
+        match: [/^https?:\/\//, 'The image URL should be valid!']
 
     },
     rating: {
@@ -40,8 +40,8 @@ const movieSchema = new Schema({
     description: {
         type: String,
         required: [true, 'Description is required!'],
-        minLength: 20,
-        match: [/^[A-Za-z0-9 ]$/, 'Description can contain only english letters digits and whitespaces!']
+        minLength: [20,'Description should be at least 20 characters!'],
+        match: [/^[A-Za-z0-9 ]+$/, 'Description can contain only english letters digits and whitespaces!']
 
     },
     casts: [{
