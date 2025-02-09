@@ -4,6 +4,13 @@ import jwt from 'jsonwebtoken';
 import { SECRET } from "../config/constants.js";
 
 const register = (email, password) => {
+
+    const id = User.findOne({ email }, { _id: true });
+
+    if (id) {
+        throw new Error('User already exist!')
+    }
+
     return User.create({ email, password });
 }
 
