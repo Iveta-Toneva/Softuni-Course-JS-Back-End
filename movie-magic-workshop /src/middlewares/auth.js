@@ -35,10 +35,19 @@ export const authMiddleware = (req, res, next) => {
 
 
 export const isAuth = (req, res, next) => {
-   
+
     if (!req.isAuth) {
         return res.redirect('/auth/login');
     }
     return next();
 }
 
+
+export const isGuest = (req, res, next) => {
+
+    if (req.isAuth) {
+        return res.redirect('/');
+    }
+
+    next();
+}

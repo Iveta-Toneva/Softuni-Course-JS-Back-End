@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authService from "../services/authService.js";
 import { getErrorMessage } from "../utils/error.js";
+import { isGuest } from "../middlewares/auth.js";
 
 
 const router = Router();
@@ -41,7 +42,7 @@ router.post('/login', async (req, res) => {
 
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', isGuest, (req, res) => {
     res.clearCookie('auth');
     res.redirect('/');
 });
