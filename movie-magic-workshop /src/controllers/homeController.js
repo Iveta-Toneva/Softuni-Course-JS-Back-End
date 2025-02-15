@@ -6,10 +6,10 @@ const router = Router();
 router.get('/', async (req, res) => {
     const movies = await movieService.getAll().lean();
     res.render('home', { movies: movies });
-})
+});
 
 router.get('/about', (req, res) => {
     res.render('about');
-})
+});
 
 export default router;
